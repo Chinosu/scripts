@@ -1,0 +1,11 @@
+max_cpu = 30
+
+files = needs-testing.c
+program = needs-testing
+
+0 command = './needs-testing' expected_stdout = 'not enough arguments\n'
+1 command = './needs-testing 1 2' expected_stdout = 'too many arguments\n'
+2 command = './needs-testing 1 2 3' expected_stdout = 'too many arguments\n'
+3 command = './needs-testing 1' expected_stdout = '1\n'
+4 command = './needs-testing 2' expected_stdout = '4\n'
+5 command = './needs-testing -4' expected_stdout = '16\n'
