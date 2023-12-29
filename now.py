@@ -58,7 +58,6 @@ class FlyModule(ABC):
         return 'now fly [command]'
     
     def run(self):
-        # make = run(['make'])
         run(['make'])
         if len(argv) > 2:
             try:
