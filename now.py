@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from subprocess import run
 from pathlib import Path
 import os
-import stat
 
 def main():
     try:
