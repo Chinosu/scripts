@@ -1,6 +1,9 @@
 from sys import argv
 from abc import ABC, abstractmethod
 from subprocess import run
+from pathlib import Path
+import os
+import stat
 
 def main():
     try:
@@ -55,16 +58,35 @@ class FlyModule(ABC):
     
     @staticmethod
     def get_usage():
-        return 'now fly [command]'
+        return 'now fly [command]?'
     
     def run(self):
         run(['make'])
-        if len(argv) > 2:
-            try:
+        try:
+            if len(argv) > 2:
                 command = argv[2::]
-                run(command)
-            except:
-                pass
+                command[0] = './' + command[0]
+            else:
+                command = './' + self.latest_executable_path_in_directory('.')
+            run(command);
+        except Exception as e:
+            print(e)
+
+    def latest_executable_path_in_directory(self, directory):
+        directory = Path(directory)
+
+        latest_executable_path = None
+        latest_mod_time = 0
+
+        for filename in os.listdir(directory):
+            path = directory / filename
+            if not path.is_file() or not os.access(path, os.X_OK): continue
+            mod_time = os.path.getmtime(path)
+            if mod_time > latest_mod_time:
+                latest_executable_path = path
+                latest_mod_time = mod_time
+        
+        return str(latest_executable_path)
 
 class Modules:
     items = [TestModule, FlyModule]
