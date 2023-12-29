@@ -1,0 +1,3 @@
+[submodule "autotest"]
+	path = autotest
+	url = git@github.com:COMP1511UNSW/autotest.git
