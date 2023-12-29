@@ -42,7 +42,7 @@ class TestModule(ABC):
         folder = argv[2]
         command = [
             'python3', '-I',
-            '/usr/local/share/autotest/autotest.py',
+            'autotest/autotest.py',
             '-E', '.',
             '-e', folder
         ]
