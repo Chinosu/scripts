@@ -63,7 +63,10 @@ class FlyModule(Module):
         return 'now fly [command]? [-- {subprocess args}]?'
     
     def run(self):
-        run(['make'])
+        make = run(['make'])
+        if make.returncode != 0:
+            return
+
         try:
             command = []
 
