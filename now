@@ -44,7 +44,7 @@ class TestModule(Module):
     
     def run(self):
         folder = argv[2]
-        autotest_path = Path(__file__).resolve().parent / 'autotest' / 'autotest.py'
+        autotest_path = Path(__file__).resolve().parent / 'submodules' / 'autotest' / 'autotest.py'
         command = [
             'python3', '-I',
             autotest_path,
