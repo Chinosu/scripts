@@ -1,0 +1,9 @@
+#! /usr/bin/env python3
+
+from pathlib import Path
+from subprocess import run
+from sys import argv
+
+autotest_path = Path(__file__).resolve().parent / 'autotest' / 'autotest.py'
+
+run(['python3', '-I', autotest_path] + argv[1:])
