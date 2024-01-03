@@ -12,7 +12,7 @@ from autotest_path import autotest_path
 
 def main():
     try:
-        module = Modules.match(argv[1])
+        module = Subcommands.match(argv[1])
         module.run()
     except:
         print_usage()
@@ -20,12 +20,12 @@ def main():
 def print_usage():
     print('=x= Usage =x=')
     print()
-    for usage in Modules.usages():
+    for usage in Subcommands.usages():
         print(usage)
     print()
     print('=x=       =x=')
 
-class Module(ABC):
+class Subcommand(ABC):
     @staticmethod
     @abstractmethod
     def get_name(): pass
@@ -37,7 +37,7 @@ class Module(ABC):
     @abstractmethod
     def run(self): pass
 
-class TestModule(Module):
+class TestModule(Subcommand):
     @staticmethod
     def get_name():
         return 'test'
@@ -56,7 +56,7 @@ class TestModule(Module):
         ]
         run(command)
 
-class FlyModule(Module):
+class FlySubcommand(Subcommand):
     @staticmethod
     def get_name():
         return 'fly'
@@ -101,7 +101,7 @@ class FlyModule(Module):
         
         return str(latest_executable_path)
     
-class CruiseModule(Module):
+class CruiseSubcommand(Subcommand):
     @staticmethod
     def get_name():
         return 'cruise'
@@ -132,19 +132,19 @@ class CruiseModule(Module):
         
         return str(latest_executable_path)
 
-class Modules:
-    items = [TestModule, FlyModule, CruiseModule]
+class Subcommands:
+    subcommands = [TestModule, FlySubcommand, CruiseSubcommand]
 
     @staticmethod
     def match(name):
-        for module in Modules.items:
-            if module.get_name() == name:
-                return module()
+        for subcommand in Subcommands.subcommands:
+            if subcommand.get_name() == name:
+                return subcommand()
         raise KeyError(name)
 
     @staticmethod
     def usages():
-        return [module.get_usage() for module in Modules.items]
+        return [subcommand.get_usage() for subcommand in Subcommands.subcommands]
 
 if __name__ == '__main__':
     main()
