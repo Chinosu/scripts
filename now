@@ -6,8 +6,9 @@ from abc import ABC, abstractmethod
 from subprocess import run
 from pathlib import Path
 import os
+import textwrap
 
-from autotest_path import autotest_path
+from paths import autotest_path, hypertest_module_path
 
 
 def main():
@@ -132,8 +133,30 @@ class CruiseSubcommand(Subcommand):
         
         return str(latest_executable_path)
 
+class HypertestInfoSubcommand(Subcommand):
+    @staticmethod
+    def get_name():
+        return 'hypertest-info'
+    
+    @staticmethod
+    def get_usage():
+        return 'now hypertest-info'
+    
+    def run(self):
+        print('Hypertest module path:')
+        print(hypertest_module_path())
+        print(textwrap.dedent("""
+                              Usage:
+                              import sys
+                              sys.path.append('hypertest module path')
+                              import hypertest
+                              """))
+
 class Subcommands:
-    subcommands = [TestModule, FlySubcommand, CruiseSubcommand]
+    subcommands = [
+        TestModule, FlySubcommand,
+        CruiseSubcommand, HypertestInfoSubcommand
+    ]
 
     @staticmethod
     def match(name):
