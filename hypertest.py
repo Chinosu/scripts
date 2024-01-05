@@ -19,6 +19,7 @@ def parameters(
 def test(
     name=None,
     command=None,
+    stdin=None,
     expected_stdout=None,
     expected_stderr=None
 ): 
