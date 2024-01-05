@@ -12,9 +12,10 @@ if __name__ == '__main__':
 def parameters(
     max_cpu=None,
     files=None,
-    program=None
+    program=None,
+    default_compilers: dict = None
 ):
-    return [f'{param}=\'{value}\'' for param, value in locals().items() if value is not None]
+    return [f'{param}={value}' for param, value in locals().items() if value is not None]
 
 def test(
     name=None,
