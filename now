@@ -67,20 +67,22 @@ class FlySubcommand(Subcommand):
         return 'now fly [command]? [-- {subprocess args}]?'
     
     def run(self):
-        make = run(['make'])
-        if make.returncode != 0:
+        make_command = ['make']
+        if '--' in argv:
+            make_command += argv[2:argv.index('--')]
+        else:
+            make_command += argv[2:]
+            
+        if run(make_command).returncode != 0:
             return
 
         try:
             command = []
 
-            if len(argv) > 2 and argv[2] != '--':
-                command.append('./' + argv[2])
-            else:
-                command.append('./' + self.latest_executable_path_in_directory('.'))
-
             if '--' in argv:
                 command += argv[argv.index('--') + 1:]
+            else:
+                command.append('./' + self.latest_executable_path_in_directory('.'))
 
             run(command);
         except Exception as e:
